@@ -13,8 +13,8 @@
   - List of grouped text
   - LangChain-compatible `Document` objects
   - Vector DB-friendly dicts with embeddings
-- 📌 Option to **merge** texts in a cluster into a single document
-- 🧱 Optional **token limit** to truncate merged content for context windows
+- 📎 `merge=True` support: Combine all texts in a cluster
+- 🎯 `max_tokens=`: Truncate merged content for context limit safety
 
 ---
 
@@ -33,6 +33,18 @@ pip install -e .
 ```
 
 ---
+
+
+## 🔧 Constructor Arguments
+
+```python
+TextChunker(
+    metric='euclidean',     # 'euclidean' (default, uses BallTree) or 'cosine' (uses KNN)
+    top_k=5,                # Number of nearest neighbors per point
+    distance_threshold=2,   # Distance threshold for inclusion in cluster
+    max_tokens=None         # Optional token cap on merged text
+)
+```
 
 ## 🧪 Quickstart Example
 

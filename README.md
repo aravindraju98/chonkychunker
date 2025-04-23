@@ -98,15 +98,6 @@ Use `merge=True` in:
 
 This will concatenate all texts in a cluster into one document. If `max_tokens` is set, it will truncate the combined text based on token count using the Sentence-BERT tokenizer.
 
----
-
-## 🧠 Cosine Distance vs Euclidean
-
-- Default distance metric: `euclidean` (used with `BallTree`)
-- Set `metric='cosine'` to switch to `NearestNeighbors` (KNN)
-  ```python
-  TextChunker(metric='cosine', ...)
-  ```
 
 ---
 
@@ -120,7 +111,7 @@ embedding = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
 db = FAISS.from_documents(docs, embedding)
 ```
 ---
-## JSON Export
+## JSON functionality
 
 You can export clustered text and embedding data as JSON — either saved to disk or returned as a JSON string.
 

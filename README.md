@@ -1,17 +1,20 @@
 # 🧠 chonkychunker
 
-**chonkychunker** is a lightweight Python library for semantically clustering related text chunks using `SentenceTransformers` and `BallTree` or `NearestNeighbors`. It's ideal for preparing data for vector databases, semantic search, and LangChain RAG pipelines.
+**chonkychunker** is a lightweight and customizable Python library for semantically chunking and clustering texts using `SentenceTransformers` and `BallTree` or `KNN`. It’s ideal for preparing grouped content for vector databases, semantic search systems, or integration into LangChain-based RAG pipelines.
 
 ---
 
-## 🔍 Features
+## 🚀 Features
 
-- ⚡ Fast Ball Tree / Nearest Neighbors-based clustering
-- 🧬 Sentence-BERT embeddings for rich semantic context
-- 🧠 Cosine or Euclidean distance support
-- 🔁 Removes overlap and deduplicates clusters
-- 📦 Outputs ready for vector DBs (FAISS, Qdrant, Pinecone, etc.)
-- 🔗 Easily converts to LangChain `Document` format
+- ✨ Uses `SentenceTransformer` embeddings (`all-MiniLM-L6-v2`)
+- 🧠 Clusters similar texts using Ball Tree or Nearest Neighbors (KNN)
+- 🔁 Deduplicates overlapping clusters
+- 🔗 Outputs clusters as:
+  - List of grouped text
+  - LangChain-compatible `Document` objects
+  - Vector DB-friendly dicts with embeddings
+- 📌 Option to **merge** texts in a cluster into a single document
+- 🧱 Optional **token limit** to truncate merged content for context windows
 
 ---
 
@@ -21,7 +24,7 @@
 pip install chonkychunker
 ```
 
-Or install from source:
+Or from source:
 
 ```bash
 git clone https://github.com/aravindraju98/chonkychunker.git
@@ -31,57 +34,82 @@ pip install -e .
 
 ---
 
-## 🚀 Quickstart
+## 🧪 Quickstart Example
 
 ```python
 from chonkychunker import TextChunker
 
 texts = [
     "The milk is spoiled.",
-    "The Egg is boiled.",
-    "Salt is added for taste.",
-    "Thermonuclear physics is easy.",
-    "Car is washed.",
-    "Water is added to cooldown.",
-    "Detergent is good for removing stains."
+    "Eggs are boiled and tasty.",
+    "Physics involves matter and energy.",
+    "Salt is added for flavor.",
+    "Thermonuclear reactions are powerful."
 ]
 
-chunker = TextChunker(top_k=3)
+chunker = TextChunker(metric='cosine', top_k=4, distance_threshold=0.5, max_tokens=50)
 chunker.embed(texts)
-clusters = chunker.cluster()
 
-for i, group in enumerate(clusters):
-    print(f"\nCluster {i+1}:")
-    for text in group:
-        print(" -", text)
+# Vector output with merged clusters
+vector_data = chunker.get_vector_output(merge=True)
+
+# LangChain Documents (merged)
+docs = chunker.to_langchain_documents(merge=True)
 ```
+
+---
+
+## 🔄 Merge Option
+
+Use `merge=True` in:
+- `get_vector_output(merge=True)`
+- `to_langchain_documents(merge=True)`
+
+This will concatenate all texts in a cluster into one document. If `max_tokens` is set, it will truncate the combined text based on token count using the Sentence-BERT tokenizer.
+
+---
+
+## 🧠 Cosine Distance vs Euclidean
+
+- Default distance metric: `euclidean` (used with `BallTree`)
+- Set `metric='cosine'` to switch to `NearestNeighbors` (KNN)
+  ```python
+  TextChunker(metric='cosine', ...)
+  ```
 
 ---
 
 ## 📘 LangChain Integration
 
 ```python
-docs = chunker.to_langchain_documents()
-
-# Use with FAISS or other LangChain vector store
 from langchain.vectorstores import FAISS
 from langchain.embeddings import HuggingFaceEmbeddings
 
 embedding = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
-vectorstore = FAISS.from_documents(docs, embedding)
+db = FAISS.from_documents(docs, embedding)
 ```
 
 ---
 
-## 🧪 Testing
+## 🧩 Dependencies
 
-```bash
-pip install -r requirements.txt
-python -m unittest tests/test_chunker.py
-```
+This library uses:
+- [`sentence-transformers`](https://github.com/UKPLab/sentence-transformers)
+- [`scikit-learn`](https://scikit-learn.org/)
+- [`langchain`](https://github.com/hwchase17/langchain)
+- [`transformers`](https://github.com/huggingface/transformers) — for token counting
+
+---
+
+## 👏 Credits
+
+- Embedding model: **[UKPLab's Sentence Transformers](https://www.sbert.net/)**
+- KNN / Ball Tree: **Scikit-learn**
+- Tokenizer: **HuggingFace Transformers**
+- LangChain support via `Document` schema
 
 ---
 
 ## 📜 License
 
-This project is licensed under the MIT License.
+MIT License © 2024 [Aravind Raju](https://github.com/aravindraju98)

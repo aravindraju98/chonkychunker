@@ -47,7 +47,7 @@ texts = [
     "Thermonuclear reactions are powerful."
 ]
 
-chunker = TextChunker(metric='cosine', top_k=4, distance_threshold=0.5, max_tokens=50)
+chunker = TextChunker(top_k=3, max_tokens=50) #using default metric='euclidean', distance_threshold = 2
 chunker.embed(texts)
 
 # Vector output with merged clusters
@@ -55,7 +55,26 @@ vector_data = chunker.get_vector_output(merge=True)
 
 # LangChain Documents (merged)
 docs = chunker.to_langchain_documents(merge=True)
+
+#content of vector_data
+[{'id': 'cluster_0',
+ 'text': 'The milk is spoiled.\nEggs are boiled and tasty.\nSalt is added for flavor.',
+ 'embedding': [-0.005473766475915909..,...0.0836096704006195,  -0.02507365308701992],
+ 'cluster': 0},
+{'id': 'cluster_1',
+  'text': 'Physics involves matter and energy.\nThermonuclear reactions are powerful.',
+  'embedding': [-0.024956505745649338,.....0.0836096704006195,  -0.02507365308701992],
+  'cluster': 0}]
+
+#content of docs
+
+[Document(metadata={'cluster': 0}, page_content='The milk is spoiled.\nEggs are boiled and tasty.\nSalt is added for flavor.'),
+ Document(metadata={'cluster': 1}, page_content='Physics involves matter and energy.\nThermonuclear reactions are powerful.')]
+
+
 ```
+
+
 
 ---
 

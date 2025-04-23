@@ -1,4 +1,5 @@
 import numpy as np
+import json
 from sklearn.neighbors import BallTree, NearestNeighbors
 from sklearn.preprocessing import normalize
 from sentence_transformers import SentenceTransformer
@@ -174,3 +175,22 @@ class TextChunker:
                 for text in cluster:
                     documents.append(Document(page_content=text, metadata={"cluster": cluster_id}))
         return documents
+    
+    def to_json(self, merge=False, filepath='chunk_output.json', return_data=False):
+        """
+        Export or return vector output as JSON for ML workflows.
+
+        Args:
+            merge (bool): If True, output merged clusters.
+            filepath (str): Path to the output JSON file.
+            return_data (bool): If True, return the JSON string instead of saving.
+
+        Returns:
+            str | List[Dict]: Path to saved file or JSON data (depending on return_data).
+        """
+        data = self.get_vector_output(merge=merge)
+        if return_data:
+            return json.dumps(data, indent=2)
+        with open(filepath, 'w') as f:
+            json.dump(data, f, indent=2)
+        return filepath

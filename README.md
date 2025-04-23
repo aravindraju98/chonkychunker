@@ -143,6 +143,23 @@ json_str = chunker.to_json(merge=True, return_data=True)
 
     return_data (bool): If True, returns a JSON string instead of saving
 ---
+## 🙏 Acknowledgments
+
+This project was made possible thanks to the incredible open-source tools and libraries created by the community:
+
+    SentenceTransformers by UKP Lab for providing state-of-the-art sentence embeddings
+
+    Hugging Face Transformers for tokenizer support and model access
+
+    scikit-learn for efficient BallTree and NearestNeighbors implementations
+
+    LangChain for offering a flexible and powerful interface for document-based LLM workflows
+
+    NumPy for vector operations and array management
+
+Special thanks to the open-source community for building and maintaining these incredible libraries ❤️
+
+---
 
 ## 📜 License
 

@@ -91,25 +91,6 @@ db = FAISS.from_documents(docs, embedding)
 
 ---
 
-## 🧩 Dependencies
-
-This library uses:
-- [`sentence-transformers`](https://github.com/UKPLab/sentence-transformers)
-- [`scikit-learn`](https://scikit-learn.org/)
-- [`langchain`](https://github.com/hwchase17/langchain)
-- [`transformers`](https://github.com/huggingface/transformers) — for token counting
-
----
-
-## 👏 Credits
-
-- Embedding model: **[UKPLab's Sentence Transformers](https://www.sbert.net/)**
-- KNN / Ball Tree: **Scikit-learn**
-- Tokenizer: **HuggingFace Transformers**
-- LangChain support via `Document` schema
-
----
-
 ## 📜 License
 
 MIT License © 2024 [Aravind Raju](https://github.com/aravindraju98)

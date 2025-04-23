@@ -1,4 +1,6 @@
-# 🧠 chonkychunker
+# <img src="https://github.com/user-attachments/assets/a51535c1-0f9d-473b-ab72-d69c13f19e35" width="50"/> chonkychunker  
+
+
 
 **chonkychunker** is a lightweight and customizable Python library for semantically chunking and clustering texts using `SentenceTransformers` and `BallTree` or `KNN`. It’s ideal for preparing grouped content for vector databases, semantic search systems, or integration into LangChain-based RAG pipelines.
 
@@ -62,7 +64,7 @@ texts = [
 chunker = TextChunker(top_k=3, max_tokens=50) #using default metric='euclidean', distance_threshold = 2
 chunker.embed(texts)
 
-# Vector output with merged clusters
+# outputs clustered data with embeddings with merged clusters
 vector_data = chunker.get_vector_output(merge=True)
 
 # LangChain Documents (merged)

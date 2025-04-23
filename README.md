@@ -46,7 +46,7 @@ texts = [
     "Detergent is good for removing stains."
 ]
 
-chunker = TextChunker(metric='cosine', top_k=4, distance_threshold=0.4)
+chunker = TextChunker(top_k=3)
 chunker.embed(texts)
 clusters = chunker.cluster()
 

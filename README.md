@@ -123,26 +123,24 @@ db = FAISS.from_documents(docs, embedding)
 ## JSON Export
 
 You can export clustered text and embedding data as JSON — either saved to disk or returned as a JSON string.
+
 🔹 Save to File:
 ```python
 
-
+chunker = TextChunker(top_k=3, max_tokens=50) #using default metric='euclidean', distance_threshold = 2
+chunker.embed(texts)
 chunker.to_json(merge=True, filepath="output.json")
+ ```
 
+🔹 Return the data in json format
+```python
+
+chunker = TextChunker(top_k=3, max_tokens=50) #using default metric='euclidean', distance_threshold = 2
+chunker.embed(texts)
 json_str = chunker.to_json(merge=True, return_data=True)
-print(json_str)
 
 ```
 
-    Saves merged (or unmerged) cluster output to a .json file.
-
-    Useful for indexing into vector databases or archiving for ML experiments.
-
-    Return as JSON String:
-
-    Returns the full JSON structure in-memory without writing to disk.
-
-    Ideal for APIs or integration into ML pipelines.
 
 🔧 Parameters:
 

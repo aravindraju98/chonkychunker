@@ -1,4 +1,6 @@
-# 🧠 chonkychunker
+# <img src="https://github.com/user-attachments/assets/a51535c1-0f9d-473b-ab72-d69c13f19e35" width="50"/> chonkychunker  
+
+
 
 **chonkychunker** is a lightweight and customizable Python library for semantically chunking and clustering texts using `SentenceTransformers` and `BallTree` or `KNN`. It’s ideal for preparing grouped content for vector databases, semantic search systems, or integration into LangChain-based RAG pipelines.
 
@@ -62,7 +64,7 @@ texts = [
 chunker = TextChunker(top_k=3, max_tokens=50) #using default metric='euclidean', distance_threshold = 2
 chunker.embed(texts)
 
-# Vector output with merged clusters
+# outputs clustered data with embeddings with merged clusters
 vector_data = chunker.get_vector_output(merge=True)
 
 # LangChain Documents (merged)
@@ -98,15 +100,6 @@ Use `merge=True` in:
 
 This will concatenate all texts in a cluster into one document. If `max_tokens` is set, it will truncate the combined text based on token count using the Sentence-BERT tokenizer.
 
----
-
-## 🧠 Cosine Distance vs Euclidean
-
-- Default distance metric: `euclidean` (used with `BallTree`)
-- Set `metric='cosine'` to switch to `NearestNeighbors` (KNN)
-  ```python
-  TextChunker(metric='cosine', ...)
-  ```
 
 ---
 
@@ -120,29 +113,27 @@ embedding = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
 db = FAISS.from_documents(docs, embedding)
 ```
 ---
-## JSON Export
+## JSON functionality
 
 You can export clustered text and embedding data as JSON — either saved to disk or returned as a JSON string.
+
 🔹 Save to File:
 ```python
 
-
+chunker = TextChunker(top_k=3, max_tokens=50) #using default metric='euclidean', distance_threshold = 2
+chunker.embed(texts)
 chunker.to_json(merge=True, filepath="output.json")
+ ```
 
+🔹 Return the data in json format
+```python
+
+chunker = TextChunker(top_k=3, max_tokens=50) #using default metric='euclidean', distance_threshold = 2
+chunker.embed(texts)
 json_str = chunker.to_json(merge=True, return_data=True)
-print(json_str)
 
 ```
 
-    Saves merged (or unmerged) cluster output to a .json file.
-
-    Useful for indexing into vector databases or archiving for ML experiments.
-
-    Return as JSON String:
-
-    Returns the full JSON structure in-memory without writing to disk.
-
-    Ideal for APIs or integration into ML pipelines.
 
 🔧 Parameters:
 
@@ -151,6 +142,23 @@ print(json_str)
     filepath (str): Output file path (if not using return_data)
 
     return_data (bool): If True, returns a JSON string instead of saving
+---
+## 🙏 Acknowledgments
+
+This project was made possible thanks to the incredible open-source tools and libraries created by the community:
+
+    SentenceTransformers by UKP Lab for providing state-of-the-art sentence embeddings
+
+    Hugging Face Transformers for tokenizer support and model access
+
+    scikit-learn for efficient BallTree and NearestNeighbors implementations
+
+    LangChain for offering a flexible and powerful interface for document-based LLM workflows
+
+    NumPy for vector operations and array management
+
+Special thanks to the open-source community for building and maintaining these incredible libraries ❤️
+
 ---
 
 ## 📜 License

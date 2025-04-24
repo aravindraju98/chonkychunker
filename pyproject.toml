@@ -1,0 +1,24 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "chonkychunker"
+version = "0.1.0"
+description = "Ball Tree-based semantic text chunker for vector databases and LangChain"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.7"
+authors = [
+  {name = "Aravind Raju", email = "aravindraju98@email.com"}
+]
+dependencies = [
+  "numpy",
+  "scikit-learn",
+  "sentence-transformers",
+  "langchain"
+]
+
+[project.urls]
+Repository = "https://github.com/aravindraju98/chonkychunker"
+Homepage = "https://pypi.org/project/chonkychunker"
